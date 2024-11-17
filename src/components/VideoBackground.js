@@ -7,7 +7,7 @@ const VideoBackground = ({movie_id}) => {
     useTrailer(movie_id)
 
     return (
-        <div className=" w-screen">
+        <div className="mb-4 w-screen">
             <iframe
                 className="w-screen aspect-video"
                 src={

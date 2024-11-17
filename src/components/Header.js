@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice"
+import { toggleView } from "../utils/finderSlice";
 
 const Header = () => {
     const navigate = useNavigate()
@@ -31,30 +32,45 @@ const Header = () => {
             }
         });
     }, [])
-    return(
+    const handleFlickFinder = () => {
+        //toggle
+        dispatch(toggleView())
+    }
+    
+    return (
         <div className="flex items-center justify-between p-4 bg-black text-white shadow-md">
-            <div>
-            <img className="w-36 h-32 ml-5" src="https://r2.erweima.ai/i/2YQT53cZR2qH6NH4lG8CBg.png" alt="logo"></img>
-            </div>
-            <ul class="flex space-x-20 mr-3 p-10">
-                <li>
-                    <a href="" class="hover:text-blue-400 font-medium">Home</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:text-blue-400 font-medium">About</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:text-blue-400 font-medium">Contact</a>
-                </li>
-                {user && ( 
-                <button className="font-bold text-white" onClick={handleSignOut}>Sign Out</button>
-                )}
-            </ul>
-
-            
+          {/* Logo */}
+          <div>
+            <img
+              className="w-36 h-32 ml-5"
+              src="https://r2.erweima.ai/i/2YQT53cZR2qH6NH4lG8CBg.png"
+              alt="logo"
+            />
+          </div>
+      
+          {/* Navigation */}
+          <div className="flex items-center space-x-10 mr-5">
+            {/* Home Link */}
+            <a href="/" className="hover:text-blue-400 font-medium">
+              Home
+            </a>
+      
+            {/* Buttons (Visible only if user is logged in) */}
+            {user && (
+              <div className="flex items-center space-x-4">
+                <button onClick={handleFlickFinder} className="bg-white text-black px-5 py-2">Flick Finder</button>
+                <button
+                  className="font-bold text-white"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        
-    )
+      );
+      
 }
 
 export default Header
